@@ -1,0 +1,293 @@
+ARKOTE-HELVETIA
+Goar 34
+IÃ±igo 25
+Adrian 24
+Markel 22
+Jose Angel 49
+Nicolas 26
+Jon 25
+Iker 29
+Asier 26
+Iker 28
+Jon 28
+IÃ±igo 25
+Aitor 35
+Eritz 18
+Xabier 21
+Mariano 48
+Aitor 44
+Juan Carlos 53
+Markel 20
+Antxon 23
+Mikel 26
+ARKOTE-HELVETIA: 29.952380952380953
+----------
+ASTILLERO-SAN JOSE XV
+Miguel Angel 39
+David 32
+Manuel 19
+Iker 37
+Jaime 26
+Roberto 38
+Israel 39
+Mario 30
+Jose Antonio 45
+Daniel 32
+Luis 22
+Miguel 27
+RubÃ©n 26
+Mikel 26
+Ruben 29
+VÃ­ctor Manuel 41
+Arrantz 27
+Alberto 37
+Adrian 29
+David 42
+Pablo 22
+Alexandru 25
+ASTILLERO-SAN JOSE XV: 31.363636363636363
+----------
+DEUSTO-BILBAO
+Alvaro 33
+Gaizka 19
+Ibai 33
+Jon 40
+Mikel 19
+BeÃ±at 26
+Peio 27
+IÃ±igo 26
+Igor 23
+Iker 32
+Jon Donnino 22
+Alvaro 29
+Hegoi 33
+Alvaro 26
+Edorta 29
+Unai 18
+Cristian 36
+Urdax 22
+Asier 26
+DEUSTO-BILBAO: 27.31578947368421
+----------
+GETARIA
+Aitzol 23
+Gorka 41
+Iker 24
+Igor 20
+Iker 19
+Josu 25
+Haritz 19
+Imanol 22
+Andoni 27
+Julen 20
+Gaizka 24
+Joseba 46
+Unax 19
+Mikel 26
+Jose Felix 45
+Erik 29
+Jon 20
+Jon 26
+EÃ±aut 20
+Jokin 26
+GETARIA: 26.05
+----------
+HIBAIKA
+Lorenzo 38
+Jon 19
+Alexander 40
+Martin 20
+Juan JosÃ© 21
+Unai 43
+Ibon 43
+Asier 37
+Mario 30
+Borja 22
+Igor 36
+David 21
+Alejandro 25
+Asier 47
+Emilio 42
+Javier 51
+Ander 43
+Hodei 30
+Endika 33
+Ander 32
+Aratz 26
+HIBAIKA: 33.285714285714285
+----------
+LEKITTARRA-ELECNOR-BM
+Ibon 31
+Nikolas 24
+Koldobika 29
+IÃ±aki 30
+Patxi 23
+Ekhi 22
+Aketza 30
+Osertz 41
+Xabier 30
+Kepa 40
+Julen 31
+Josu 30
+Aitor 25
+Jurgi 28
+Kepa 24
+Jon 29
+Mikel 25
+Ander 30
+IÃ±aki 39
+Markel 30
+LEKITTARRA-ELECNOR-BM: 29.55
+----------
+LAPURDI
+Laffitte 25
+Laurent 24
+Thomas 27
+Ainara 36
+Guillermo 38
+Gorka 17
+Antton Mattin Joseba 22
+Xabi 33
+Guillaume 33
+Yann 30
+Battit 24
+Wiliam 24
+Gorka 21
+Damien 19
+Damien Jean Baptiste 27
+Gaspard 36
+BeÃ±at 25
+Germain 35
+Iban 27
+Patxi 25
+Julien 35
+Adrien 27
+Alexis 25
+Jon 22
+LAPURDI: 27.375
+----------
+SDR PEDRENA
+Francisco 19
+David 39
+Roman 26
+Roberto 40
+JosÃ© MarÃ­a 33
+Kewin 21
+Jose Alberto 34
+Alejandro 24
+Miguel 38
+Angel 41
+Carlos 41
+Victor Manuel 34
+Gabriel 26
+Jesus MarÃ­a 37
+Ionel 41
+Victor Jose 23
+Javier 18
+Vasile 41
+Eduardo 36
+Carlos 37
+Miguel 26
+Santiago 59
+SDR PEDRENA: 33.36363636363637
+----------
+PORTUGALETE
+Jon Ander 22
+Diego 18
+Diego 18
+Jon 23
+Aitzol 19
+Igor 28
+Jon 21
+Andoitz 21
+Ander 20
+Aser 20
+Ander 19
+Mikel 22
+Ander 19
+Jon Ander 22
+Mikel 21
+Jon 19
+Iker 21
+Aitor 19
+IÃ±igo 19
+Josu 27
+Juan Antonio 53
+Unai 20
+PORTUGALETE: 22.318181818181817
+----------
+SAN JUAN-SUMELEC
+Imanol 29
+Miguel 41
+Jon 15
+Endika 31
+Ion 19
+Akaitz 41
+Jon 17
+Garoa 30
+Francesc 28
+Aritz 27
+Oier 19
+Martin 30
+Julen 19
+Ibon 23
+Unai 20
+Ostadar 35
+Unai 20
+Gaizka 18
+Peio 22
+Ander 20
+Txomin 29
+SAN JUAN-SUMELEC: 25.38095238095238
+----------
+ZARAUTZ-BABYAUTO
+Garikoitz 36
+Alain 18
+Gorka 30
+IÃ±igo 23
+BeÃ±at 27
+Imanol 21
+Aitzol 18
+Oinatz 26
+Ekaitz 19
+Gaizka 44
+IÃ±igo 18
+Joanes 19
+Ion 23
+Ioritz 19
+Aitor 40
+Danel 26
+Manex 17
+Xabier 22
+Martin 21
+Josu 18
+Gorka 17
+ZARAUTZ-BABYAUTO: 23.904761904761905
+----------
+ZUMAIA-SALEGI JATETXEA
+IÃ±aki 23
+Xipri 29
+Unai 30
+Daniel 25
+Ibon 18
+Jon 22
+Aitor 20
+Xabier 24
+Josu 29
+Jon 30
+Alex 17
+Aritz 21
+Imanol 18
+Jabier 49
+Unai 18
+Andoni 31
+Peru 21
+Ibon 18
+Eneko 21
+IÃ±aki 19
+Juan Ignazio 18
+Ander 19
+EÃ±aut 22
+Jokin 31
+ZUMAIA-SALEGI JATETXEA: 23.875
+----------

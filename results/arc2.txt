@@ -1,0 +1,351 @@
+BERMEO-SUMOIL
+Ekaitz 18
+Fernando 40
+Unai 24
+Josu 48
+Endika 18
+Josu Andoni 47
+Iker 17
+Gabirel 19
+Ander 21
+Aitor 43
+Aitor 28
+Aimar 26
+Jon Ander 26
+Jon 23
+Julen 17
+Mikel 18
+Jon 25
+Ugutz 24
+Gorka 19
+Jon 18
+Jefferson 22
+BERMEO-SUMOIL: 25.761904761904763
+----------
+ELANTXOBE-IDAR
+Ivan 32
+Josu 36
+Unai 43
+Jon 19
+Joseba 19
+Eneko 21
+Estanislao 21
+Patxi 47
+Ander 21
+Ander 18
+Jon 18
+Borja 33
+Gaizka 19
+Guillermo 22
+Asier 43
+Markel 19
+Paul 19
+IÃ±igo 19
+Aitor 21
+Joseba Andoni 33
+ELANTXOBE-IDAR: 26.15
+----------
+CAMARGO
+Alfonso 25
+Manuel 20
+Manuel 58
+Ruben 34
+Francisco Javier 19
+Adrian 21
+Aitor 25
+Alvaro 23
+Manuel Alejandro 30
+Victor 23
+Jonatan 30
+Sergio 33
+Jorge Palmiro 41
+Alberto 20
+Jose Ramon 47
+Patricio 21
+Adrian 21
+Israel 27
+Enrique 43
+Oscar 21
+Javier 27
+CAMARGO: 29.0
+----------
+Castreña
+Andres 31
+Julen 21
+Javier 35
+Iosu 26
+David 25
+Pablo 18
+Ignacio 45
+Alberto 29
+Enrique 46
+Jose Eugenio 43
+John Alexander 18
+Alejandro 36
+Aitor 22
+Ivan 35
+Elias 31
+Joseba 25
+Joisel Manuel 17
+Gustavo 50
+Asier 22
+Pedro 45
+Juan Jose 40
+Francisco 47
+Castreña: 32.13636363636363
+----------
+Colindres
+Juan Francisco 49
+Adrian 34
+Diego 32
+Alejandro 21
+Roberto 44
+Luis Andres 39
+Daniel 36
+Alonso Estefano 20
+Yeray 20
+Adrian 30
+Jesus 21
+Pablo 19
+Jesus 37
+Ruben 20
+Ivan 19
+Borja 19
+Javier 25
+Diego 19
+Antonio 37
+Carlos 28
+Guillermo 21
+Jose Luis 55
+Aingeru 22
+Jorge 20
+Jose Ignacio 53
+Colindres: 29.6
+----------
+LAREDO-LA PEJINUCA
+Pablo 32
+Jorge 27
+Laro 21
+Javier 41
+Abraham 23
+Jorge 23
+Jose Angel 30
+Jorge 31
+AgustÃ­n 38
+Francisco Alberto 36
+Alberto 29
+Maximo Diego 43
+Peio 19
+Antonio 34
+Jon 19
+RubÃ©n 27
+Ivan 22
+Mikel 21
+David 34
+Alejandro 34
+Alvaro 46
+Cristobal 49
+Alfonso 33
+Luis Fernando 46
+Jose Angel 35
+LAREDO-LA PEJINUCA: 31.72
+----------
+DONOSTIARRA
+Endika 20
+Andoni 19
+Jon 20
+Peru 21
+Asier 23
+Roman Ignacio 19
+Nabil 21
+Aitzol 22
+Martin 26
+Iker 20
+Mikel 27
+Mikel 21
+Iker 21
+Jon Aitor 29
+Andoni 25
+Mikel 27
+Andoni 19
+Erik 22
+Alex 25
+Iker 20
+Xabier 26
+DONOSTIARRA: 22.523809523809526
+----------
+Getxo
+Erik 19
+Jon 32
+Markos 30
+Jorge 41
+Ibon 23
+Julen 37
+Eneko 39
+Ander 24
+Aitor 28
+Iker 23
+Jagoba 21
+IÃ±igo 21
+David 25
+Pedro 33
+Miguel 19
+Aritz 32
+Jon Mirena 25
+IÃ±igo 23
+Asier 27
+Arkaitz 26
+Juan Gabriel 42
+Alexander 28
+Getxo: 28.09090909090909
+----------
+HONDARRIBIA
+Julen 29
+Gorka 19
+Igor 22
+Patxi 19
+Andoni 22
+Julen 28
+BeÃ±at 20
+Alexander 26
+Peru 20
+Urtzi 24
+Andoni 19
+Julen 25
+Xabier 27
+Urko 22
+Iker 21
+Urko 38
+Asier 43
+Pere 24
+Jon 20
+Haritz 18
+HONDARRIBIA: 24.3
+----------
+LUTXANA AE
+Ander 20
+Iker 45
+Eneko 23
+Abraham 22
+Josu 35
+Felix 57
+Alberto 28
+Ibon 22
+Joseba 18
+Iker 40
+Yakhya 21
+Carmelo Javier 48
+Urko 27
+Eugeni 36
+Ander 26
+Adrian 32
+Mikel 22
+Luis Alberto 35
+Alfonso 47
+Javier 50
+Aitor 19
+LUTXANA AE: 32.04761904761905
+----------
+MUTRIKU
+Mikel 21
+Egoitz 26
+Iker 17
+Josu 24
+Mikel 26
+Nikanor 42
+Gaizka 35
+Jon 30
+Fernando 29
+Lorenzo 60
+Ekaitz 28
+Unai 18
+Mikel 28
+Inazio Julen 25
+Aiert 21
+Xabier 30
+Andoni 42
+Juan Luis 54
+Ander 26
+Ekain 20
+Jenaro 41
+IÃ±igo 34
+Peru 30
+Egoitz 30
+MUTRIKU: 30.708333333333332
+----------
+ORIO-BABYAUTO
+Imanol 19
+Luis 24
+Jon 19
+Aritz 23
+Julen 20
+Kevin 29
+Mikel 23
+Aitor 20
+Joseba 18
+Jon 18
+Gorka 23
+Sergio 27
+Julen 20
+Jokin 18
+Endika 30
+Mikel 19
+Ugaitz 27
+Jon 17
+Imanol 26
+Iker 23
+Kepa 25
+Gorka 24
+Julen 21
+Iker 23
+Joseba 21
+ORIO-BABYAUTO: 22.28
+----------
+SAN PEDRO
+Mikel 20
+Gar  Maren 19
+Alvaro 22
+Javier 25
+Unai 17
+IÃ±aki 31
+Mikel 35
+Asier 42
+Eneko 20
+Asier 38
+Aitzol 18
+Imanol 41
+Jon 18
+Ramon 52
+Oier 26
+Jokin 19
+IÃ±igo 19
+Aitor 20
+Unai 18
+Ander 22
+Jon 38
+Jon 20
+SAN PEDRO: 26.363636363636363
+----------
+IRC SANTOÑA
+Sergio 26
+Carlos 23
+Pablo 40
+Ramon 35
+Mikel 25
+IÃ±igo 46
+Jose Manuel 37
+Adrian 20
+Javier 38
+Jonathan 39
+Ivan 32
+Luis Guillermo 34
+Sergio 34
+Igor 27
+Sergio 33
+Pedro Antonio 44
+Francisco Jose 51
+Gerardo 48
+Raul 40
+Alberto 20
+IRC SANTOÑA: 34.6
+----------
