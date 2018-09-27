@@ -1,0 +1,4 @@
+pages/*
+results/*
+venv/*
+*.pyc
