@@ -15,7 +15,7 @@ class ActAgeParser:
             f.write(main_page.text)
         f.close()
 
-    def get_clubs_in_year(self, year):
+    def get_clubs_in_year(self, year, liga):
         clubs = []
         stats = requests.get(f'http://estropadak.net/api/sailkapena?league=act&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
