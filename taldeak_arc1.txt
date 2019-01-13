@@ -1,0 +1,35 @@
+1 Hondarribia
+100 Kaiku
+101 Iberia
+102 Portugalete
+103 Itsasoko ama
+104 Zierbena
+111 Luanco
+12 Donostiarra
+14 Orio
+16 Zarautz
+17 Zumaia
+19 Getaria
+228 Club de remo Santander
+233 oiartzun
+27 Castro
+28 Castro
+29 Colindres
+31 Camargo
+36 Ciudad de Santander
+37 Santoña
+4 San Pedro
+40 Pedreña
+6 Hibaika
+7 Trintxerpe
+88 Ondarroa
+89 Isuntza
+91 Busturialdea
+91 Elantxobe
+92 Bermeo
+94 Mundaka
+95 Arkote
+96 Getxo
+97 Raspas
+98 Lutxana
+99 Deustu
