@@ -1,5 +1,7 @@
 import pytest
+import lxml
 from parsers.actageparser import ActAgeParser
+from collections import namedtuple
 
 
 def test_get_clubs_in_year():
@@ -18,5 +20,38 @@ def test_get_clubs_in_year():
         {"url": "/clubes/plantilla.php?id=es&c=68", "name": "Zierbena"},
     ]
     actAgeParser = ActAgeParser()
-    year_clubs = actAgeParser.get_clubs_in_year(2018)
+    year_clubs = actAgeParser.get_clubs_in_year(2018, 'act')
     assert all([c['name'] == y['name'] and c['url'] == y['url'] for c, y in zip(clubs, year_clubs)])
+
+def test_parse_rower_data():
+    document = ''
+    pathname = '/Users/andergarmendia/Pets/estropadak-rowers-data/pages/act/2018/donostiarra-[\'AITOR-ARANEGI\'].html'
+    with open(pathname, 'r', encoding='utf-8') as f:
+        document = lxml.html.fromstring(f.read())
+
+    actAgeParser = ActAgeParser()
+    data = actAgeParser.parse_rower_detail_data(document)
+    Rower = namedtuple('Rower', ['name', 'birthplace', 'birthday', 'historial'])
+    historial = [
+        {'2018': 'Donostiarra'},
+        {'2017': 'Donostiarra'},
+        {'2016': 'Donostiarra'},
+        {'2015': 'Donostiarra'},
+        {'2014': 'Donostiarra'},
+        {'2013': 'Donostiarra'},
+        {'2012': 'Donostiarra'},
+        {'2011': 'Donostiarra'},
+        {'2010': 'Donostiarra'},
+        {'2009': 'Donostiarra'},
+        {'2008': 'Donostiarra'},
+        {'2007': 'DONOSTIA ARRAUN LAGUNAK'},
+        {'2006': 'DONOSTIA ARRAUN LAGUNAK'},
+        {'2005': 'DONOSTIA ARRAUN LAGUNAK'},
+        {'2004': 'DONOSTIA ARRAUN LAGUNAK'},
+        {'2003': 'DONOSTIA ARRAUN LAGUNAK'},
+        {'2002': 'DONOSTIA ARRAUN LAGUNAK'},
+        {'2001': 'DONOSTIA ARRAUN LAGUNAK'},
+    ]
+    Rower = ('AITOR ARANEGI UGARTEBURU', 'DONOSTIA', '19-05-1989', historial)
+    assert data == Rower
+
