@@ -3,6 +3,7 @@ import lxml.html
 import glob
 import os
 import re
+from collections import namedtuple
 
 
 class Arc1AgeParser:
@@ -28,7 +29,6 @@ class Arc1AgeParser:
             for line in f:
                 l = line.strip().split(' ', maxsplit=1)
                 liga_clubs[l[1]] = l[0]
-                print(l[1])
         f.close()
         for izena in izenak:
             try:
@@ -66,15 +66,31 @@ class Arc1AgeParser:
 
     def parse_years_in_rowing(self, content):
         counter = 0
+        historial = []
         bad_name = content.cssselect('.nombre-apellidos')[0].text_content()
         full_name = re.sub('([A-Z])', r' \1', bad_name)
+        name = full_name.strip()
+        for year in content.cssselect('div.historial table tbody tr'):
+            cols = year.cssselect('td')
+            if cols[1].text is not None:
+                historial.append({cols[0].text: cols[1].text})
+                counter += 1
+        return historial
+
+    def parse_rower_detail_data(self, content):
+        counter = 0
+        bad_name = content.cssselect('.nombre-apellidos')[0].text_content()
+        full_name = re.sub('([A-Z])', r' \1', bad_name)
+        jaiolekua = content.cssselect('.poblacion')[0].text_content()
+        age = int(content.cssselect('.edad strong')[0].text.strip())
         name = full_name.strip()
         for year in content.cssselect('div.historial table tbody tr'):
             cols = year.cssselect('td.club span')
             if len(cols) > 0:
                 counter += 1
-        return (name, counter)
-
+        historial = self.parse_years_in_rowing(content)
+        Rower = namedtuple('Rower', ['name', 'birthplace', 'age', 'historial'])
+        return Rower(name, jaiolekua, age,historial)
 
     def parse_rower_data(self, content):
         name = ''
@@ -83,27 +99,6 @@ class Arc1AgeParser:
         print(f'{name} {age}')
         return (name, age)
 
-    def analize_staff_data(self, data):
-        ages = []
-        average = 0
-        for d in data:
-            age = d[1]
-            ages.append(age)
-            average = sum(ages)/len(ages)
-        return average
-
-
-    def analize_rowing_years(self, data):
-        years = []
-        if len(data) > 0:
-            for d in data:
-                print(f'{d[0]} {d[1]}')
-                years.append(d[1])
-            average = sum(years)/len(years)
-            return average
-        else:
-            return None
-
     def isRower(self, content):
         title = content.cssselect('.fizda')
         if title[0].text.strip() == 'Remero':
@@ -111,39 +106,24 @@ class Arc1AgeParser:
         else:
             return False
 
-    def parse_staff_deep_data(self, club):
-        staff_data = []
-        for pathname in glob.glob(f'{self.file_path}/{club}-*'):
-            with open(pathname, 'r', encoding='utf-8') as f:
-                document = lxml.html.fromstring(f.read())
-                data = self.parse_years_in_rowing(document)
-            staff_data.append(data)
-        return self.analize_rowing_years(staff_data)
-
     def parse_staff_data(self, club, year):
         staff_data = []
         for pathname in glob.glob(f'{self.file_path}/{year}/{club}-*'):
             try:
-                print(pathname)
                 with open(pathname, 'r', encoding='utf-8') as f:
                     document = lxml.html.fromstring(f.read())
-                    data = self.parse_rower_data(document)
+                    data = self.parse_rower_detail_data(document)
                     staff_data.append(data)
             except IndexError:
                 pass
-        return self.analize_staff_data(staff_data)
-
-    def analize_years(self):
-        for club in self.staff:
-            average = self.parse_staff_deep_data(club['name'])
-            print(f'{club["name"]}: {average}')
-            print(10*'-')
+        return staff_data
 
     def analize(self, year):
+        result = {}
         for club in self.staff:
-            average = self.parse_staff_data(club['name'], year)
-            print(f'{club["name"]}: {average}')
-            print(10*'-')
+            rowers_data = average = self.parse_staff_data(club['name'], year)
+            result[club['name']] = rowers_data
+        return result
 
     def __init__(self):
         pass
