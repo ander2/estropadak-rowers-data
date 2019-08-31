@@ -17,10 +17,15 @@ if __name__ == '__main__':
         parser = Arc1AgeParser()
     elif liga == 'arc2':
         parser = Arc2AgeParser()
+    elif liga == 'euskotren':
+        parser = EuskotrenAgeParser()
+    elif liga == 'ete':
+        parser = EteAgeParser()
     parser.staff = parser.get_clubs_in_year(year, liga)
+    print(parser.staff)
     for club in parser.staff:
-        if club['name'] != 'C.N. Luanco':
-            continue
+        print(club['name'])
+        print(club['url'])
         parser.get_plantilla_page(club['name'], year, club['url'])
         parser.get_rowers_data(club['name'], year)
     parser.analize(year)

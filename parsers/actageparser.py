@@ -2,7 +2,7 @@ import os
 import requests
 import lxml.html
 import glob
-from collections import namedtuple
+from parsers.rower import Rower
 
 
 class ActAgeParser:
@@ -18,7 +18,7 @@ class ActAgeParser:
 
     def get_clubs_in_year(self, year, liga):
         clubs = []
-        stats = requests.get(f'http://estropadak.net/api/sailkapena?league=act&year={year}').json()
+        stats = requests.get(f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         act_clubs = {}
         with open(f'./taldeak_act_.txt', 'r', encoding='utf-8') as f:
@@ -40,10 +40,10 @@ class ActAgeParser:
         print(f'Getting page for {club}: {self.url_base}{url}')
         page = requests.get(f'{self.url_base}{url}&t={year}')
         try:
-            os.stat(f'./pages/act/{year}')
+            os.stat(f'{self.file_path}/{year}')
         except FileNotFoundError:
-            os.mkdir(f'./pages/act/{year}')
-        with open(f'./pages/act/{year}/{club}.html', 'w', encoding='utf-8') as f:
+            os.mkdir(f'{self.file_path}/{year}')
+        with open(f'{self.file_path}/{year}/{club}.html', 'w', encoding='utf-8') as f:
             f.write(page.text)
         f.close()
 
@@ -115,8 +115,7 @@ class ActAgeParser:
             if ind == 2:
                 birthday = data.text.strip()
         historial = self.parse_years_in_rowing(content)
-        Rower = namedtuple('Rower', ['name', 'birthplace', 'birthday', 'historial'])
-        return Rower(name, jaiolekua, birthday, historial)
+        return Rower(name, jaiolekua, birthday, None, historial)
 
     def analize_rowing_years(self, data):
         years = []

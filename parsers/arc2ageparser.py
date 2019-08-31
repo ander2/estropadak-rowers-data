@@ -12,7 +12,7 @@ class Arc2AgeParser(Arc1AgeParser):
     def get_clubs_in_year(self, year, liga):
         clubs = []
         talde_id = 2
-        stats = requests.get(f'http://estropadak.net/api/sailkapena?league={liga}&year={year}').json()
+        stats = requests.get(f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         liga_clubs = {}
         with open(f'./taldeak_{liga}.txt', 'r', encoding='utf-8') as f:

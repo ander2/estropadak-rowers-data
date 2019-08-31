@@ -3,17 +3,12 @@ import lxml.html
 import glob
 import logging
 import os
+from parsers.actageparser import ActAgeParser
 
 
-class EuskotrenAgeParser:
-    url_base = 'http://www.euskolabelliga.com/femenina'
+class EuskotrenAgeParser(ActAgeParser):
+    url_base = 'http://www.euskolabelliga.com'
     file_path = './pages/euskotren'
-    clubs = [
-        {"url": "/clubes/plantilla.php?id=es&c=1432575135", "name": "Arraun"},
-        {"url": "/clubes/plantilla.php?id=es&c=10", "name": "hondarribia"},
-        {"url": "/clubes/plantilla.php?id=es&c=7", "name": "orio"},
-        {"url": "/clubes/plantilla.php?id=es&c=9", "name": "sanjuan"},
-    ]
 
     def get_main_page(self):
         main_page = requests.get(f'{self.url_base}clubes')
@@ -29,32 +24,24 @@ class EuskotrenAgeParser:
                 f.write(page.text)
             f.close()
 
-    def get_rowers_data(self, club):
-        pass
-
-    def parse_rower_data(self, content):
-        name = ''
-        surname = ''
-        birthday = ''
-        for ind, data in enumerate(content.cssselect('span.texto_remero span')):
-            if ind == 0:
-                name = data.text.strip()
-            if ind == 1:
-                surname = data.text.strip()
-            if ind == 5:
-                birthday = data.text.strip()
-        return (name, surname, birthday)
-
-    def analize_staff_data(self, data):
-        ages = []
-        for d in data:
-            print(f'{d[0]} {d[1]}: {d[2]}')
-            date_lst = d[2].split('-')
-            year = int(date_lst[0])
-            age = 2018 - year
-            ages.append(age)
-        average = sum(ages)/len(ages)
-        return average
+    def get_clubs_in_year(self, year, liga):
+        clubs = []
+        stats = requests.get(f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}').json()
+        izenak = sorted(list(stats[0]['stats'].keys()))
+        act_clubs = {}
+        with open(f'./taldeak_euskotren.txt', 'r', encoding='utf-8') as f:
+            for line in f:
+                l = line.strip().split(' ', maxsplit=1)
+                act_clubs[l[1]] = l[0]
+        f.close()
+        for izena in izenak:
+            try:
+                id = act_clubs[izena]
+                clubs.append({"name": izena, "url":f'/femenina/clubes/plantilla.php?id=es&c={id}' })
+                print(izena)
+            except Exception as e:
+                print(f'No match for: {izena}')
+        return clubs
 
     def isRower(self, content):
         title = content.cssselect('.fizda')
@@ -63,27 +50,6 @@ class EuskotrenAgeParser:
             return True
         else:
             return False
-
-    def parse_staff_data(self, club):
-        staff_data = []
-        print(club)
-        with open(f'{self.file_path}/{club}.html', 'r', encoding='utf-8') as f:
-            document = lxml.html.fromstring(f.read())
-            rower_data = document.cssselect('ul.remero li')
-            for rower in rower_data:
-                print(rower)
-                if not self.isRower(rower):
-                    continue
-                data = self.parse_rower_data(rower)
-                staff_data.append(data)
-        return self.analize_staff_data(staff_data)
-
-    def analize(self):
-        for club in self.clubs:
-            self.get_club_data(club['name'], club['url'])
-            average = self.parse_staff_data(club['name'])
-            print(f'{club["name"]}: {average}')
-            print(10*'-')
 
     def __init__(self):
         pass

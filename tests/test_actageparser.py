@@ -1,5 +1,5 @@
 import pytest
-import lxml
+import lxml.html
 from parsers.actageparser import ActAgeParser
 from collections import namedtuple
 

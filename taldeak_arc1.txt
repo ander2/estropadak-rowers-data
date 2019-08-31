@@ -18,6 +18,7 @@
 31 Camargo
 36 Ciudad de Santander
 37 Santoña
+3 San Juan
 4 San Pedro
 40 Pedreña
 6 Hibaika
@@ -33,3 +34,4 @@
 97 Raspas
 98 Lutxana
 99 Deustu
+235 Lapurdi

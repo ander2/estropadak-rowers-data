@@ -3,7 +3,7 @@ import lxml.html
 import glob
 import os
 import re
-from collections import namedtuple
+from parsers.rower import Rower
 
 
 class Arc1AgeParser:
@@ -22,7 +22,7 @@ class Arc1AgeParser:
         liga_id = 1
         if liga == 'arc2':
             liga_id = 2
-        stats = requests.get(f'http://estropadak.net/api/sailkapena?league={liga}&year={year}').json()
+        stats = requests.get(f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         liga_clubs = {}
         with open(f'./taldeak_{liga}.txt', 'r', encoding='utf-8') as f:
@@ -89,8 +89,7 @@ class Arc1AgeParser:
             if len(cols) > 0:
                 counter += 1
         historial = self.parse_years_in_rowing(content)
-        Rower = namedtuple('Rower', ['name', 'birthplace', 'age', 'historial'])
-        return Rower(name, jaiolekua, age,historial)
+        return Rower(name, jaiolekua, None, age,historial)
 
     def parse_rower_data(self, content):
         name = ''
