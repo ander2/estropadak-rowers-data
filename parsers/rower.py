@@ -7,3 +7,8 @@ class Rower:
         self.historial = historial
         self.age = age
 
+    def __eq__(self, rower):
+        return (self.name == rower.name and 
+                self.birthday == rower.birthday and 
+                self.birthplace == rower.birthplace)
+
