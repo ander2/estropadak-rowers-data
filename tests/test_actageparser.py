@@ -1,6 +1,7 @@
 import pytest
 import lxml.html
 from parsers.actageparser import ActAgeParser
+from parsers.rower import Rower
 from collections import namedtuple
 
 
@@ -25,13 +26,12 @@ def test_get_clubs_in_year():
 
 def test_parse_rower_data():
     document = ''
-    pathname = '/Users/andergarmendia/Pets/estropadak-rowers-data/pages/act/2018/donostiarra-[\'AITOR-ARANEGI\'].html'
+    pathname = './pages/act/2018/donostiarra-[\'AITOR-ARANEGI\'].html'
     with open(pathname, 'r', encoding='utf-8') as f:
         document = lxml.html.fromstring(f.read())
 
     actAgeParser = ActAgeParser()
     data = actAgeParser.parse_rower_detail_data(document)
-    Rower = namedtuple('Rower', ['name', 'birthplace', 'birthday', 'historial'])
     historial = [
         {'2018': 'Donostiarra'},
         {'2017': 'Donostiarra'},
@@ -52,6 +52,6 @@ def test_parse_rower_data():
         {'2002': 'DONOSTIA ARRAUN LAGUNAK'},
         {'2001': 'DONOSTIA ARRAUN LAGUNAK'},
     ]
-    Rower = ('AITOR ARANEGI UGARTEBURU', 'DONOSTIA', '19-05-1989', historial)
-    assert data == Rower
-
+    rower = Rower('AITOR ARANEGI UGARTEBURU', 'DONOSTIA', '19-05-1989', None, historial)
+    assert data == rower
+    assert data.historial == rower.historial
