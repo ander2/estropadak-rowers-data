@@ -65,9 +65,7 @@ def calculate_rowers_ages(rowers, base_year, liga):
                 d = start - birthday
                 age = d.days / 365
             else:
-                if base_year <= 2019:
-                    age = rower.age - (2019 - base_year)
-                else:
+                if rower.age:
                     age = rower.age - (2019 - base_year)
             ages.append(age)
     return ages
