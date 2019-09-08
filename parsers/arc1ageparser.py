@@ -42,6 +42,7 @@ class Arc1AgeParser:
     def get_plantilla_page(self, club, year, url):
         print(f'Getting page for {club}: {self.url_base}{url}')
         page = requests.get(f'{self.url_base}{url}')
+        page.encoding = 'utf-8'
         try:
             os.stat(f'{self.file_path}/{year}')
         except FileNotFoundError:
@@ -59,30 +60,42 @@ class Arc1AgeParser:
                 rower_name = link_lst[-1:]
                 print(f'Getting data for {club} {rower_name}')
                 page = requests.get(link.get('href'))
+                page.encoding = 'utf-8'
                 with open(f'{self.file_path}/{year}/{club}-{rower_name}.html', 'w', encoding='utf-8') as f2:
                     f2.write(page.text)
                     continue
         f.close()
 
     def parse_years_in_rowing(self, content):
-        counter = 0
         historial = []
         bad_name = content.cssselect('.nombre-apellidos')[0].text_content()
         full_name = re.sub('([A-Z])', r' \1', bad_name)
         name = full_name.strip()
         for year in content.cssselect('div.historial table tbody tr'):
             cols = year.cssselect('td')
-            if cols[1].text is not None:
-                historial.append({cols[0].text: cols[1].text})
-                counter += 1
+            year = cols[0].text_content()
+            club = cols[1].text_content()
+            licencia = cols[2].text_content()
+            if licencia:
+                if club:
+                    historial.append({year: club})
+                else:
+                    historial.append({year: licencia})
         return historial
 
     def parse_rower_detail_data(self, content):
         counter = 0
         bad_name = content.cssselect('.nombre-apellidos')[0].text_content()
         full_name = re.sub('([A-Z])', r' \1', bad_name)
-        jaiolekua = content.cssselect('.poblacion')[0].text_content()
-        age = int(content.cssselect('.edad strong')[0].text.strip())
+        try:
+            jaiolekua = content.cssselect('.poblacion')[0].text_content()
+        except IndexError:
+            jaiolekua = None
+        try:
+            age = int(content.cssselect('.edad strong')[0].text.strip())
+        except IndexError:
+            age = None
+
         name = full_name.strip()
         for year in content.cssselect('div.historial table tbody tr'):
             cols = year.cssselect('td.club span')
