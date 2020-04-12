@@ -1,14 +1,16 @@
 ''' Export analyzed data to CouchDB database'''
 
-import pickle 
-import sys
+import pickle
 import datetime
 import json
 import couchdb
-
+import logging
 from calculate_alta_baja import calculate_alta_baja
 
+logger = logging.getLogger('estropadak')
 db = None
+
+
 def init_db():
     global db
     couch = couchdb.Server('http://admin:admin123@127.0.0.1:5984')
@@ -16,11 +18,12 @@ def init_db():
         del couch['test']
     except couchdb.ResourceNotFound:
         print("DB already reseted")
-    options = { 
+    options = {
         'create_target': True
     }
     couch.replicate('estropadak', 'test', **options)
     db = couch['test']
+
 
 def get_data(liga):
     ''' Load serialized data '''
@@ -29,29 +32,49 @@ def get_data(liga):
         data = pickle.load(f)
     return data
 
+
 def update_stats(year, liga, stats):
     ''' Update couch object '''
     global db
     doc_id = f'rank_{liga.upper()}_{year}'
     doc = db[doc_id]
     for team, data in stats[year].items():
-        doc['stats'][team].update(data)  
+        doc['stats'][team].update(data)
     db[doc_id] = doc
+
 
 def encode_rower(r):
     if hasattr(r, 'name'):
-        return {"name": r.name, "birthday": r.birthday, "birthplace": r.birthplace, "historial": r.historial}
+        return {
+            "name": r.name,
+            "birthday": r.birthday,
+            "birthplace": r.birthplace,
+            "historial": r.historial
+        }
     else:
         return r
+
 
 def create_team_page(year, liga, teams):
     ''' Create couch object to store the team'''
     global db
     for team, data in teams.items():
         key = f'team_{liga.upper()}_{year}_{team}'
-        doc = { "name": team, "year": year, "liga": liga.upper()}
-        doc['rowers'] = json.loads(json.dumps(data, default=encode_rower, indent=2))
-        db[key] = doc
+        doc = {
+            "name": team,
+            "year": year,
+            "liga": liga.upper()
+        }
+        doc['rowers'] = json.loads(
+            json.dumps(data, default=encode_rower, indent=2)
+        )
+        try:
+            old_doc = db[key]
+            doc['_rev'] = old_doc.rev
+            print(doc)
+            db[key] = doc
+        except:
+            db[key] = doc
 
 
 def calculate_rowers_ages(rowers, base_year, liga):
@@ -61,7 +84,9 @@ def calculate_rowers_ages(rowers, base_year, liga):
         if rower.name not in baja:
             age = 0
             if liga == 'ACT' or liga == 'EUSKOTREN':
-                birthday = datetime.datetime.strptime(rower.birthday, '%d-%m-%Y')
+                birthday = datetime.datetime.strptime(
+                    rower.birthday,
+                    '%d-%m-%Y')
                 d = start - birthday
                 age = d.days / 365
             else:
@@ -73,7 +98,7 @@ def calculate_rowers_ages(rowers, base_year, liga):
 
 if __name__ == "__main__":
     init_db()
-    ligak = ['ACT', 'ARC1', 'ARC2', 'EUSKOTREN', 'ETE']
+    ligak = ['ACT']  # , 'ARC1', 'ARC2', 'EUSKOTREN', 'ETE']
     for liga in ligak:
         data = get_data(liga)
         update_aldaketak = True
@@ -81,13 +106,16 @@ if __name__ == "__main__":
         for year, teams in data.items():
             result[year] = {}
             if data.get(year - 1, None) is None:
-                # create_team_page(year, liga, teams)
+                create_team_page(year, liga, teams)
                 continue
             for team, rowers in teams.items():
                 alta = {}
                 baja = {}
                 try:
-                    alta, baja = calculate_alta_baja(teams, data[year - 1], team)
+                    alta, baja = calculate_alta_baja(
+                        teams,
+                        data[year - 1],
+                        team)
                     update_aldaketak = True
                     result[year][team] = {
                         "rowers": {
@@ -97,8 +125,8 @@ if __name__ == "__main__":
                     }
                 except KeyError as e:
                     update_aldaketak = False
-                    print(f'{team} not found on {year-1}')
-                    print(e)
+                    logger.debug(f'{team} not found on {year-1}')
+                    logger.exception(e)
                 ages = calculate_rowers_ages(rowers, year, liga)
                 total_rowers = len(rowers)
                 min_age = min(ages)
@@ -113,7 +141,7 @@ if __name__ == "__main__":
                         }
                     })
                 except KeyError:
-                    result[year][team] = { 
+                    result[year][team] = {
                         "age": {
                             "min_age": min_age,
                             "max_age": max_age,
