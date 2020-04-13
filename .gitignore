@@ -6,4 +6,4 @@ results/*
 venv/*
 *.pyc
 *.swp
-
+.pytest*
