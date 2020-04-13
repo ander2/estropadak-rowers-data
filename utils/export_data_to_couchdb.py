@@ -1,5 +1,6 @@
 ''' Export analyzed data to CouchDB database'''
 
+import click
 import pickle
 import datetime
 import json
@@ -8,6 +9,7 @@ import logging
 from calculate_alta_baja import calculate_alta_baja
 
 logger = logging.getLogger('estropadak')
+logger.setLevel('DEBUG')
 db = None
 
 
@@ -71,7 +73,6 @@ def create_team_page(year, liga, teams):
         try:
             old_doc = db[key]
             doc['_rev'] = old_doc.rev
-            print(doc)
             db[key] = doc
         except:
             db[key] = doc
@@ -79,26 +80,31 @@ def create_team_page(year, liga, teams):
 
 def calculate_rowers_ages(rowers, base_year, liga):
     ages = []
-    start = datetime.datetime.strptime(f'01-06-{year}', '%d-%m-%Y')
+    start = datetime.datetime.strptime(f'01-06-{base_year}', '%d-%m-%Y')
     for rower in rowers:
-        if rower.name not in baja:
-            age = 0
-            if liga == 'ACT' or liga == 'EUSKOTREN':
-                birthday = datetime.datetime.strptime(
-                    rower.birthday,
-                    '%d-%m-%Y')
-                d = start - birthday
-                age = d.days / 365
-            else:
-                if rower.age:
-                    age = rower.age - (2019 - base_year)
+        age = 0
+        if liga == 'ACT' or liga == 'EUSKOTREN':
+            birthday = datetime.datetime.strptime(
+                rower.birthday,
+                '%d-%m-%Y')
+            d = start - birthday
+            age = d.days / 365
+        else:
+            if rower.age:
+                age = rower.age
+        if age > 0:
             ages.append(age)
     return ages
 
 
-if __name__ == "__main__":
+@click.command()
+@click.option("--liga", type=click.Choice(['ACT', 'ARC1', 'ARC2', 'EUSKOTREN', 'ETE']))
+def export_to_db(liga):
     init_db()
-    ligak = ['ACT']  # , 'ARC1', 'ARC2', 'EUSKOTREN', 'ETE']
+    if liga:
+        ligak = [liga]
+    else:
+        ligak = ['ACT', 'ARC1', 'ARC2', 'EUSKOTREN', 'ETE']
     for liga in ligak:
         data = get_data(liga)
         update_aldaketak = True
@@ -128,7 +134,6 @@ if __name__ == "__main__":
                     logger.debug(f'{team} not found on {year-1}')
                     logger.exception(e)
                 ages = calculate_rowers_ages(rowers, year, liga)
-                total_rowers = len(rowers)
                 min_age = min(ages)
                 max_age = max(ages)
                 avg_age = sum(ages) / len(ages)
@@ -151,3 +156,7 @@ if __name__ == "__main__":
 
             update_stats(year, liga, result)
             create_team_page(year, liga, teams)
+
+
+if __name__ == "__main__":
+    export_to_db()
