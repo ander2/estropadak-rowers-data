@@ -9,7 +9,7 @@ from parsers.rower import Rower
 class Arc1AgeParser:
     url_base = 'http://www.liga-arc.com/es/'
     file_path = './pages/arc1'
-    staff = [ ]
+    staff = []
 
     def get_main_page(self):
         main_page = requests.get(f'{self.url_base}clubes')
@@ -27,19 +27,22 @@ class Arc1AgeParser:
         liga_clubs = {}
         with open(f'./taldeak_{liga}.txt', 'r', encoding='utf-8') as f:
             for line in f:
-                l = line.strip().split(' ', maxsplit=1)
-                liga_clubs[l[1]] = l[0]
+                line = line.strip().split(' ', maxsplit=1)
+                liga_clubs[line[1]] = line[0]
         f.close()
         for izena in izenak:
             try:
                 id = liga_clubs[izena]
-                _izena = izena.replace('ñ','')
-                clubs.append({"name": izena, "url":f'/clubes/{year}/{id}/{liga_id}/{_izena}/plantilla' })
+                _izena = izena.replace('ñ', '')
+                clubs.append({
+                    "name": izena,
+                    "url": f'/clubes/{year}/{id}/{liga_id}/{_izena}/plantilla'
+                })
             except Exception:
                 print(f'No match for: {izena}')
         return clubs
 
-    def get_plantilla_page(self, club, year, url):
+    def fetch_plantilla_page(self, club, year, url):
         print(f'Getting page for {club}: {self.url_base}{url}')
         page = requests.get(f'{self.url_base}{url}')
         page.encoding = 'utf-8'
@@ -51,7 +54,7 @@ class Arc1AgeParser:
             f.write(page.text)
         f.close()
 
-    def get_rowers_data(self, club, year):
+    def fetch_rower_pages(self, club, year):
         with open(f'{self.file_path}/{year}/{club}.html', 'r', encoding='utf-8') as f:
             document = lxml.html.fromstring(f.read())
             links = document.cssselect('.ver-ficha a')
@@ -68,9 +71,6 @@ class Arc1AgeParser:
 
     def parse_years_in_rowing(self, content):
         historial = []
-        bad_name = content.cssselect('.nombre-apellidos')[0].text_content()
-        full_name = re.sub('([A-Z])', r' \1', bad_name)
-        name = full_name.strip()
         for year in content.cssselect('div.historial table tbody tr'):
             cols = year.cssselect('td')
             year = cols[0].text_content()
@@ -102,7 +102,7 @@ class Arc1AgeParser:
             if len(cols) > 0:
                 counter += 1
         historial = self.parse_years_in_rowing(content)
-        return Rower(name, jaiolekua, None, age,historial)
+        return Rower(name, jaiolekua, None, age, historial)
 
     def parse_rower_data(self, content):
         name = ''
@@ -133,7 +133,7 @@ class Arc1AgeParser:
     def analize(self, year):
         result = {}
         for club in self.staff:
-            rowers_data = average = self.parse_staff_data(club['name'], year)
+            rowers_data = self.parse_staff_data(club['name'], year)
             result[club['name']] = rowers_data
         return result
 

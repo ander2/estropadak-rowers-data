@@ -12,46 +12,52 @@ class ActAgeParser:
 
     def get_main_page(self, year):
         main_page = requests.get(self.url_base)
-        with open(f'./pages/act/{year}/euskolabel.html', 'w', encoding='utf-8') as f:
+        file_path = f'./pages/act/{year}/euskolabel.html'
+        with open(file_path, 'w', encoding='utf-8') as f:
             f.write(main_page.text)
         f.close()
 
     def get_clubs_in_year(self, year, liga):
         clubs = []
-        stats = requests.get(f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}').json()
+        url = f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}'
+        stats = requests.get(url).json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         act_clubs = {}
         with open(f'./taldeak_act_.txt', 'r', encoding='utf-8') as f:
             for line in f:
-                l = line.strip().split(' ', maxsplit=1)
-                act_clubs[l[1]] = l[0]
+                line = line.strip().split(' ', maxsplit=1)
+                act_clubs[line[1]] = line[0]
         f.close()
         for izena in izenak:
             try:
                 id = act_clubs[izena]
-                clubs.append({"name": izena, "url":f'/clubes/plantilla.php?id=es&c={id}' })
+                clubs.append({
+                    "name": izena,
+                    "url": f'/clubes/plantilla.php?id=es&c={id}'
+                })
                 print(izena)
             except Exception as e:
                 print(f'No match for: {izena}')
         return clubs
 
-
-    def get_plantilla_page(self, club, year, url):
+    def fetch_plantilla_page(self, club, year, url):
         print(f'Getting page for {club}: {self.url_base}{url}')
         page = requests.get(f'{self.url_base}{url}&t={year}')
         try:
             os.stat(f'{self.file_path}/{year}')
         except FileNotFoundError:
             os.mkdir(f'{self.file_path}/{year}')
-        with open(f'{self.file_path}/{year}/{club}.html', 'w', encoding='utf-8') as f:
+        file_path = f'{self.file_path}/{year}/{club}.html'
+        with open(file_path, 'w', encoding='utf-8') as f:
             f.write(page.text)
         f.close()
 
-    def get_rowers_data(self, club, year):
+    def fetch_rower_pages(self, club, year):
         if club == 'cabo':
             return
         _club = club.lower().replace(' ', '')
-        with open(f'{self.file_path}/{year}/{club}.html', 'r', encoding='utf-8') as f:
+        file_path = f'{self.file_path}/{year}/{club}.html'
+        with open(file_path, 'r', encoding='utf-8') as f:
             document = lxml.html.fromstring(f.read())
             rowers = document.cssselect('.cuadro_remero')
             for rower in rowers:
@@ -71,7 +77,6 @@ class ActAgeParser:
 
     def parse_years_in_rowing(self, content):
         counter = 0
-        name = content.cssselect('h3.clasificacion:not(.historial)')[0].text.strip()
         historial = []
         for year in content.cssselect('table.historial tbody tr'):
             cols = year.cssselect('td')
@@ -105,7 +110,6 @@ class ActAgeParser:
         return average
 
     def parse_rower_detail_data(self, content):
-        surname = ''
         birthday = ''
         jaiolekua = ''
         name = content.cssselect('h3.clasificacion')[0].text.strip()

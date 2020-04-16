@@ -1,5 +1,3 @@
-import requests
-import lxml.html
 import sys
 
 from parsers.actageparser import ActAgeParser
@@ -26,6 +24,6 @@ if __name__ == '__main__':
     for club in parser.staff:
         print(club['name'])
         print(club['url'])
-        parser.get_plantilla_page(club['name'], year, club['url'])
-        parser.get_rowers_data(club['name'], year)
+        parser.fetch_plantilla_page(club['name'], year, club['url'])
+        parser.fetch_rower_pages(club['name'], year)
     parser.analize(year)
