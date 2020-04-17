@@ -8,8 +8,8 @@ import couchdb
 import logging
 from calculate_alta_baja import calculate_alta_baja
 
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('estropadak')
-logger.setLevel('DEBUG')
 db = None
 
 
@@ -99,7 +99,9 @@ def calculate_rowers_ages(rowers, base_year, liga):
 
 @click.command()
 @click.option("--liga", type=click.Choice(['ACT', 'ARC1', 'ARC2', 'EUSKOTREN', 'ETE']))
-def export_to_db(liga):
+@click.option("--year", type=click.INT, help="Year to export")
+def export_to_db(liga, year):
+    year_to_export = year
     init_db()
     if liga:
         ligak = [liga]
@@ -110,11 +112,14 @@ def export_to_db(liga):
         update_aldaketak = True
         result = {}
         for year, teams in data.items():
+            if year_to_export and year != year_to_export:
+                continue
             result[year] = {}
             if data.get(year - 1, None) is None:
                 create_team_page(year, liga, teams)
                 continue
             for team, rowers in teams.items():
+                logger.info(f'**{team}**')
                 alta = {}
                 baja = {}
                 try:
