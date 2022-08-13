@@ -21,7 +21,7 @@ def write_to_csv(year, league, data):
                 for arraunlari in adin_arabera:
                     spamwriter.writerow([arraunlari.name, arraunlari.birthday, arraunlari.birthplace])
             if 'arc' in league or league == 'ete':
-                adin_arabera = sorted(data[taldea], key=lambda arraunlari: arraunlari.age)
+                adin_arabera = sorted(data[taldea], key=lambda arraunlari: arraunlari.age or 0)
                 spamwriter.writerow([taldea])
                 for arraunlari in adin_arabera:
                     spamwriter.writerow([arraunlari.name, arraunlari.age, arraunlari.birthplace])
