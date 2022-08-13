@@ -4,6 +4,10 @@ import glob
 import os
 import re
 from parsers.rower import Rower
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('estropadak')
 
 
 class Arc1AgeParser:
@@ -22,13 +26,13 @@ class Arc1AgeParser:
         liga_id = 1
         if liga == 'arc2':
             liga_id = 2
-        stats = requests.get(f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}').json()
+        stats = requests.get(f'http://estropadak.eus/api/sailkapenak?league={liga}&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         liga_clubs = {}
         with open(f'./taldeak_{liga}.txt', 'r', encoding='utf-8') as f:
             for line in f:
-                line = line.strip().split(' ', maxsplit=1)
-                liga_clubs[line[1]] = line[0]
+                (club_id, _, izena) = line.strip().partition(' ')
+                liga_clubs[izena] = club_id
         f.close()
         for izena in izenak:
             try:
@@ -39,11 +43,11 @@ class Arc1AgeParser:
                     "url": f'/clubes/{year}/{id}/{liga_id}/{_izena}/plantilla'
                 })
             except Exception:
-                print(f'No match for: {izena}')
+                logger.error('Error while getting clubs in year', exc_info=True)
         return clubs
 
     def fetch_plantilla_page(self, club, year, url):
-        print(f'Getting page for {club}: {self.url_base}{url}')
+        logger.info(f'Getting page for {club}: {self.url_base}{url}')
         page = requests.get(f'{self.url_base}{url}')
         page.encoding = 'utf-8'
         try:
@@ -61,7 +65,7 @@ class Arc1AgeParser:
             for link in links:
                 link_lst = link.get('href').split('/')
                 rower_name = link_lst[-1:]
-                print(f'Getting data for {club} {rower_name}')
+                logger.info(f'Getting data for {club} {rower_name}')
                 page = requests.get(link.get('href'))
                 page.encoding = 'utf-8'
                 with open(f'{self.file_path}/{year}/{club}-{rower_name}.html', 'w', encoding='utf-8') as f2:

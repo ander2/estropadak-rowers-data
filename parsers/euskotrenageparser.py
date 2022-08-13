@@ -26,7 +26,7 @@ class EuskotrenAgeParser(ActAgeParser):
 
     def get_clubs_in_year(self, year, liga):
         clubs = []
-        stats = requests.get(f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}').json()
+        stats = requests.get(f'http://estropadak.eus/api/sailkapenak?league={liga}&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         act_clubs = {}
         with open(f'./taldeak_euskotren.txt', 'r', encoding='utf-8') as f:

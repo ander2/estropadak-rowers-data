@@ -12,9 +12,12 @@ from parsers.eteageparser import EteAgeParser
 
 def load_data(liga):
     ''' Load serialized data '''
-    data = None
-    with open(f'./results/{liga.lower()}_data', 'rb') as f:
-        data = pickle.load(f)
+    data = {}
+    try: 
+        with open(f'./results/{liga.lower()}_data', 'rb') as f:
+            data = pickle.load(f)
+    except FileNotFoundError:
+        print('Pick file not found')
     return data
 
 
@@ -52,8 +55,8 @@ def write_to_csv(year, data):
         'act', 'arc1', 'arc2', 'euskotren', 'ete'
     ]))
 def analize(year, liga):
-    start_year = 2009
-    end_year = 2021
+    start_year = 2020
+    end_year = 2023
     team_data = load_data(liga)
     if liga == 'act':
         parser = ActAgeParser()
@@ -68,7 +71,6 @@ def analize(year, liga):
         start_year = 2011
     elif liga == 'ete':
         parser = EteAgeParser()
-        start_year = 2018
     if not year:
         for year in range(start_year, end_year):
             parser.staff = parser.get_clubs_in_year(year, liga)

@@ -19,11 +19,11 @@ class ActAgeParser:
 
     def get_clubs_in_year(self, year, liga):
         clubs = []
-        url = f'http://estropadak.eus/api/sailkapena?league={liga}&year={year}'
+        url = f'http://estropadak.eus/api/sailkapenak?league={liga}&year={year}'
         stats = requests.get(url).json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         act_clubs = {}
-        with open(f'./taldeak_act_.txt', 'r', encoding='utf-8') as f:
+        with open('./taldeak_act_.txt', 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip().split(' ', maxsplit=1)
                 act_clubs[line[1]] = line[0]
