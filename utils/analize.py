@@ -48,27 +48,24 @@ def write_to_csv(year, data):
 
 
 @click.command()
-@click.option('--year', type=click.INT, help='Year to analize')
+@click.option('--start-year', type=click.INT, help='Year to start analysis')
+@click.option('--end-year', type=click.INT, help='Year to end analysis')
+@click.option('--year', type=click.INT, help='Year to analyze')
 @click.argument(
     'liga',
     type=click.Choice([
         'act', 'arc1', 'arc2', 'euskotren', 'ete'
     ]))
-def analize(year, liga):
-    start_year = 2020
-    end_year = 2023
+def analize(start_year, end_year, year, liga):
     team_data = load_data(liga)
     if liga == 'act':
         parser = ActAgeParser()
     elif liga == 'arc1':
         parser = Arc1AgeParser()
-        start_year = 2010
     elif liga == 'arc2':
         parser = Arc2AgeParser()
-        start_year = 2010
     elif liga == 'euskotren':
         parser = EuskotrenAgeParser()
-        start_year = 2011
     elif liga == 'ete':
         parser = EteAgeParser()
     if not year:

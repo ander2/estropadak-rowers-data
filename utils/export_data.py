@@ -1,12 +1,11 @@
 ''' Export analyzed data as JSON '''
 
-from email.policy import default
 import click
 import pickle
 import datetime
 import json
 import logging
-from calculate_alta_baja import calculate_alta_baja
+from .calculate_alta_baja import calculate_alta_baja
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('estropadak')
