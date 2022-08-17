@@ -1,18 +1,21 @@
 import os
+import os.path
 import requests
 import lxml.html
 import glob
+import config
+
 from parsers.rower import Rower
 
 
 class ActAgeParser:
     url_base = 'http://euskolabelliga.com'
-    file_path = './pages/act'
+    file_path = config.ACT_FILES_PATH
     staff = []
 
     def get_main_page(self, year):
         main_page = requests.get(self.url_base)
-        file_path = f'./pages/act/{year}/euskolabel.html'
+        file_path = os.path.join(config.ACT_FILES_PATH, year, config.ACT_MAIN_FILE)
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(main_page.text)
         f.close()
@@ -23,7 +26,7 @@ class ActAgeParser:
         stats = requests.get(url).json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         act_clubs = {}
-        with open('./taldeak_act_.txt', 'r', encoding='utf-8') as f:
+        with open(config.ACT_TEAM_FILE, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip().split(' ', maxsplit=1)
                 act_clubs[line[1]] = line[0]

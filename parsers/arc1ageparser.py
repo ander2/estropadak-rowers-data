@@ -3,6 +3,7 @@ import lxml.html
 import glob
 import os
 import re
+import config 
 from parsers.rower import Rower
 import logging
 
@@ -12,7 +13,7 @@ logger = logging.getLogger('estropadak')
 
 class Arc1AgeParser:
     url_base = 'http://www.liga-arc.com/es/'
-    file_path = './pages/arc1'
+    file_path = config.ARC1_FILES_PATH
     staff = []
 
     def get_main_page(self):
@@ -29,7 +30,7 @@ class Arc1AgeParser:
         stats = requests.get(f'http://estropadak.eus/api/sailkapenak?league={liga}&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         liga_clubs = {}
-        with open(f'./taldeak_{liga}.txt', 'r', encoding='utf-8') as f:
+        with open(config.ARC1_TEAM_FILE, 'r', encoding='utf-8') as f:
             for line in f:
                 (club_id, _, izena) = line.strip().partition(' ')
                 liga_clubs[izena] = club_id

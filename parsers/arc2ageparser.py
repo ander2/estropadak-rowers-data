@@ -1,10 +1,11 @@
 import requests
+import config
 from parsers.arc1ageparser import Arc1AgeParser
 
 
 class Arc2AgeParser(Arc1AgeParser):
     url_base = 'http://www.liga-arc.com/es/'
-    file_path = './pages/arc2'
+    file_path = config.ARC2_FILES_PATH
 
     def __init__(self):
         super()
@@ -15,7 +16,7 @@ class Arc2AgeParser(Arc1AgeParser):
         stats = requests.get(f'http://estropadak.eus/api/sailkapenak?league={liga}&year={year}').json()
         izenak = sorted(list(stats[0]['stats'].keys()))
         liga_clubs = {}
-        with open(f'./taldeak_{liga}.txt', 'r', encoding='utf-8') as f:
+        with open(config.ARC2_TEAM_FILE, 'r', encoding='utf-8') as f:
             for line in f:
                 l = line.strip().split(' ', maxsplit=1)
                 liga_clubs[l[1]] = l[0]
